@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crash Monitoring Dashboard</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Firebase (Modular) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, set, onValue, push, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBfe8xcZZIZlsgwDb8cmUO4vCPmJRunWOQ",
+      authDomain: "crashdetection-4bb19.firebaseapp.com",
+      databaseURL: "https://crashdetection-4bb19-default-rtdb.firebaseio.com",
+      projectId: "crashdetection-4bb19",
+      storageBucket: "crashdetection-4bb19.appspot.com",
+      messagingSenderId: "347077837459",
+      appId: "1:347077837459:web:94e33b1847ecce98d40366"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    window.firebase = { db, ref, set, onValue, push, child };
+  </script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+  <div id="loginPage">
+    <div class="login-box">
+      <h2>Admin Login</h2>
+      <input type="text" id="loginUser" placeholder="Username" />
+      <input type="password" id="loginPass" placeholder="Password" />
+      <button onclick="authenticate()">Unlock</button>
+    </div>
+  </div>
+
+  <div id="dashboard" style="display:none;">
+    <h1>Crash Monitoring Dashboard</h1>
+
+    <section>
+      <h2>Register Vehicle</h2>
+      <form id="vehicleForm">
+        <input type="text" id="vehicleNumber" placeholder="Vehicle Number (e.g. AP167894)" required />
+        <input type="text" id="phoneNumbers" placeholder="Phone Numbers (comma separated)" required />
+        <button type="submit">Register</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Select Vehicle to Monitor</h2>
+      <select id="vehicleSelector"></select>
+      <button id="setActiveBtn" type="button">Set Active Vehicle</button>
+    </section>
+
+    <section>
+      <h2>Crash Logs</h2>
+      <ul id="crashLogs"></ul>
+    </section>
+
+    <section>
+      <h2>Live Map (Last Crash)</h2>
+      <div id="map"></div>
+    </section>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
